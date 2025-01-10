@@ -1,10 +1,10 @@
 # Kiko Now
 
-*Read this in other languages: [English](README.md), [한국어](README.ko.md).*
+*Read this in other languages: [**English**](README.md), [**한국어**](README.ko.md).*
 
-**Jekyll** is a static site generator that's perfect for GitHub hosted blogs ([Jekyll Repository](https://github.com/jekyll/jekyll))
+**Jekyll**은 GitHub 호스팅 블로그에 완벽한 정적 사이트 생성기입니다 ([Jekyll Repository](https://github.com/jekyll/jekyll))
 
-**Kiko Now** is a Jekyll theme based on **[Jekyll Now](https://github.com/barryclark/jekyll-now)**, following the philosophy of **Jekyll Now**, which makes it easier to create your Jekyll blog, by eliminating a lot of the up front setup.
+**Kiko Now**는 **[Jekyll Now](https://github.com/barryclark/jekyll-now)**를 기반으로 한 Jekyll 테마로, **Jekyll Now**의 철학을 따라 초기 설정을 많이 줄여 Jekyll 블로그를 더 쉽게 만들 수 있게 합니다.
 
 ![Kiko Now Theme Screenshot](/images/kiko-now-theme-screenshot.png "Kiko Now Theme Screenshot")
 
