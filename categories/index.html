@@ -11,17 +11,17 @@ title: Categories
       <h2 id="{{ category | slugify }}">
         {% case category %}
         {% when 'Machine Learning' %}
-          📚
-        {% when 'etc' %}
           🚀
+        {% when 'etc' %}
+          🫧
         {% when 'tutorial' %}
           💡
-        {% when 'guide' %}
+        {% when 'Statistics' %}
           📖
         {% when 'tech' %}
-          💻
+          💻 📌
         {% else %}
-          📌
+          📚
         {% endcase %}
         {{ category }}
       </h2>

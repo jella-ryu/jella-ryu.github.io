@@ -24,12 +24,12 @@ navigation:
     url: /
   - name: About
     url: /about
-  - name: Archive
-    url: /archive
   - name: Categories
     url: /categories
   - name: Tags
     url: /tags
+  - name: Archive
+    url: /archive
 
 # Pagination
 paginate: 5
