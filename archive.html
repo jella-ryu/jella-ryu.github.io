@@ -1,0 +1,42 @@
+---
+layout: page
+title: Archive
+permalink: /archive/
+---
+
+<div class="archive">
+  <div class="archive-list">
+  {% if site.posts.size == 0 %}
+    <h2>No post found</h2>
+  {% else %}
+  {% for post in site.posts %}
+    {% capture currentyear %}{{post.date | date: "%Y"}}{% endcapture %}
+    {% capture currentmonth %}{{post.date | date: "%m"}}{% endcapture %}
+    {% if currentyear >= "2025" %}
+      {% if currentyear != year %}
+        {% unless forloop.first %}</ul>{% endunless %}
+        <h3>{{ currentyear }}</h3>
+        <hr class="year-divider">
+        {% capture year %}{{currentyear}}{% endcapture %}
+        {% assign month = "" %}
+      {% endif %}
+      {% if currentmonth != month %}
+        {% unless forloop.first and currentyear == year %}</ul>{% endunless %}
+        <h4>{{ post.date | date: "%m월" }}</h4>
+        <ul>
+        {% capture month %}{{currentmonth}}{% endcapture %}
+      {% endif %}
+      <li>
+        <div class="archive-post-title">
+          <a href="{{ post.url | prepend: site.baseurl }}">{{post.title}}</a>
+        </div>
+        <div class="archive-post-date">
+          {{ post.date | date: "%Y-%m-%d" }}
+        </div>
+      </li>
+    {% endif %}
+  {% endfor %}
+  {% endif %}
+  </ul>
+  </div>
+</div> 

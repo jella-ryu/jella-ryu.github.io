@@ -412,6 +412,7 @@ nav {
 .post {
   h1 {
     margin-bottom: .1em;
+    font-size: 24px;
   }
 
   .date {
@@ -449,6 +450,23 @@ nav {
   }
 
   .read-more {
+    font-size: 15px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  h3 {
+    font-size: 18px;
+  }
+
+  h4 {
+    font-size: 16px;
+    color: $base-lighten-color;
+  }
+
+  p, li {
     font-size: 15px;
   }
 }
@@ -497,6 +515,36 @@ nav {
     font-size: $small-font-size;
     font-weight: 300;
     margin-left: 3px;
+  }
+
+  .archive-list {
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    
+    li {
+      padding: 5px 0;
+      display: flex;
+      justify-content: space-between;
+      font-size: 15px;
+    }
+
+    .archive-post-title {
+      flex: 1;
+      a {
+        color: $base-color;
+        text-decoration: none;
+        &:hover {
+          color: $link-color;
+        }
+      }
+    }
+
+    .archive-post-date {
+      color: $base-lighten-color;
+      font-size: 14px;
+    }
   }
 }
 
@@ -594,3 +642,26 @@ footer {
 // Settled on moving the import of syntax highlighting to the bottom of the CSS
 // ... Otherwise it really bloats up the top of the CSS file and makes it difficult to find the start
 @import "highlights";
+
+.page {
+  h1 {
+    font-size: 24px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  h3 {
+    font-size: 18px;
+  }
+
+  h4 {
+    font-size: 16px;
+    color: $base-lighten-color;
+  }
+
+  p, li {
+    font-size: 15px;
+  }
+}
