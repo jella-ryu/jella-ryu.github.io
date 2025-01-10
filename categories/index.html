@@ -1,0 +1,113 @@
+---
+layout: page
+title: Categories
+---
+
+<div class="categories">
+  {% assign categories_list = site.posts | map: "category" | uniq %}
+  {% for category in categories_list %}
+    {% if category != nil %}
+    <div class="category-section">
+      <h2 id="{{ category | slugify }}">
+        {% case category %}
+        {% when 'sample_category' %}
+          📚
+        {% when 'etc' %}
+          🚀
+        {% when 'tutorial' %}
+          💡
+        {% when 'guide' %}
+          📖
+        {% when 'tech' %}
+          💻
+        {% else %}
+          📌
+        {% endcase %}
+        {{ category }}
+      </h2>
+      <ul class="post-list">
+        {% assign category_posts = site.posts | where: "category", category | sort: "date" | reverse %}
+        {% for post in category_posts %}
+          <li>
+            <div class="post-item">
+              <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+              <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endfor %}
+</div>
+
+<style>
+.categories {
+  padding: 10px 0;
+}
+
+.category-section {
+  margin-bottom: 20px;
+}
+
+.category-divider {
+  margin: 25px 0;
+  border: 0;
+  border-top: 1px solid #eee;
+}
+
+.category-section h2 {
+  color: #444;
+  font-size: 1.2em;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 6px;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+/* 이모지 스타일링 */
+.category-section h2::before {
+  margin-right: 8px;
+}
+
+.post-list {
+  list-style-type: none;
+  padding-left: 20px;
+  margin: 0;
+}
+
+.post-list li {
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.post-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  border-bottom: 1px dotted #eee;
+}
+
+.post-item:last-child {
+  border-bottom: none;
+}
+
+.post-item a {
+  color: #555;
+  text-decoration: none;
+  font-size: 0.95em;
+  flex: 1;
+  margin-right: 15px;
+}
+
+.post-item a:hover {
+  color: #007bff;
+}
+
+.post-date {
+  color: #999;
+  font-size: 0.85em;
+  white-space: nowrap;
+}
+</style>
