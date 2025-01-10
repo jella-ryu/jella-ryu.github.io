@@ -7,6 +7,8 @@ comments: true
 published: true
 ---
 
+> 📚 어떤 모델이 더 나은 모델일까? (분류 모델)
+
 ## Model Calibration이란?
 
 - Model Calibration('모델 보정'이라고 해석됨)은 예측된 확률이나 결과의 정확도를 높이기 위해 모델의 예측을 조정하는 프로세스입니다.
