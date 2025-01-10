@@ -7,7 +7,7 @@ comments: true
 published: true
 ---
 
-## Precision, Recall, F1 Score 각각의 의미와 활용 목적
+> 📚 Precision, Recall, F1 Score 각각의 의미와 활용 목적
 
 ### 1. Precision (정밀도)
 
@@ -43,4 +43,3 @@ published: true
 
 ### 혼동 행렬 (Confusion Matrix)
 
-![Confusion Matrix](/images/classification-metrics.png)
