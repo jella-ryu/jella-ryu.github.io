@@ -1,15 +1,22 @@
 ---
 layout: page
-title: About
+title: About me
 permalink: /about/
 ---
 
-Some information about you!
+데이터 분석가 류민승입니다!
 
 ### More Information
 
-A place to include any other types of information that you'd like to include about yourself.
+Coinone에서 근무하며, 암호화폐 거래소의 복잡한 데이터를 다루는 실무 경험을 쌓았습니다. 
+
+이벤트 성과 분석 자동화, 머신러닝 기반 타겟팅 모델 개발, CRM 캠페인 개인화 전략 도출 등 다양한 프로젝트를 통해 데이터 기반 의사결정을 적극 지원해왔습니다. 
+
+특히, 앱푸시 오픈율 13% 증가, 기능 사용률 435% 향상 등 비즈니스 성과를 직접 이끌어내며 데이터 분석의 실질적 가치를 입증한 경험이 있습니다.
+
+또한, 실무 역량 강화를 위해 꾸준히 학습하며, 이를 바탕으로 팀과 조직의 데이터 활용 능력을 높이기 위해 자료를 제작하고 지식을 공유해 왔습니다. 데이터 중심 문화를 확산시키는 데 깊은 관심을 갖고, 이를 실현하기 위해 적극적으로 노력하고 있습니다!
+
 
 ### Contact me
 
-[email@domain.com](mailto:email@domain.com)
+[minseung.ryou@gmail.com](mailto:minseung.ryou@gmail.com)
