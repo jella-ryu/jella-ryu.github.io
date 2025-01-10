@@ -10,7 +10,7 @@ title: Categories
     <div class="category-section">
       <h2 id="{{ category | slugify }}">
         {% case category %}
-        {% when 'sample_category' %}
+        {% when 'Machine Learning' %}
           📚
         {% when 'etc' %}
           🚀
@@ -37,7 +37,8 @@ title: Categories
         {% endfor %}
       </ul>
     </div>
-  {% endfor %}
+  {% endif %}
+{% endfor %}
 </div>
 
 <style>

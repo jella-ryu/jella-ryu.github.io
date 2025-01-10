@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Model Calibration"
-category: "sample_category" 
+category: "Machine Learning" 
 tags: [ML, Model Retraining]
 comments: true
 published: true
