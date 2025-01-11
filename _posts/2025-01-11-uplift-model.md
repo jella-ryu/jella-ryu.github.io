@@ -2,7 +2,7 @@
 layout: post
 title: "Uplift Model"
 category: [Machine Learning]
-tags: [ML, Model]
+tags: [ML, Decision Tree]
 comments: true
 published: true
 ---
@@ -15,7 +15,7 @@ published: true
 - 통신 회사가 customer churn(고객 이탈)을 줄이는 것이 목표인 시나리오를 생각해보자.
 - 보통의 ML 기반 모델을 사용하는 경우라면, 과거의 데이터를 이용해서 현재 고객이 이탈 가능성이 있는지 예측할 것이다. 그리고 예측 결과에 기반해 이탈 위험 고객을 식별하고 맞춤형 인센티브나 프로모션을 제공하는 등 조치를 취할 것이다.
 
-#### 그런데..
+#### 그런데.. 
 - 만약 그럼에도 불구하고 고객이 떠나가면? (이사 등으로 인해)
 - 우편이나 전화 등으로 발송된 프로모션이 오히려 이탈 욕구를 자극한다면?
 - 오히려 프로모션 같은게 없어도 남아있을 고객이 이탈해버릴 수도 있다!
