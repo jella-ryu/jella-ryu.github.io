@@ -30,6 +30,8 @@ navigation:
     url: /tags
   - name: Archive
     url: /archive
+  - name: Daily Learning
+    url: /daily-learning
 
 # Pagination
 paginate: 5
@@ -107,6 +109,10 @@ exclude:
   - LICENSE
   - README.md
   - CNAME
+
+# Include directories and files
+include:
+  - _pages
 
 # Collections
 collections:

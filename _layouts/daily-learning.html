@@ -1,0 +1,409 @@
+---
+layout: default
+---
+
+<article class="daily-learning">
+  <h2>{{ page.title }}</h2>
+  
+  <div class="learning-form">
+    <form id="learningForm">
+      <input type="hidden" id="editIndex" value="-1">
+      <div class="form-group">
+        <label for="date">Date</label>
+        <input type="date" id="date" required>
+      </div>
+      <div class="form-group">
+        <label for="learning1">Point 1</label>
+        <textarea id="learning1" rows="2" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="learning2">Point 2</label>
+        <textarea id="learning2" rows="2" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="learning3">Point 3</label>
+        <textarea id="learning3" rows="2" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="tags">태그 (쉼표로 구분)</label>
+        <input type="text" id="tags" placeholder="예: JavaScript, React, CSS">
+      </div>
+      <div class="button-group">
+        <button type="submit" id="submitBtn">저장하기</button>
+        <button type="button" id="cancelBtn" style="display: none;">취소</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="learning-list">
+    <h3>Learning Log</h3>
+    <div id="learningEntries"></div>
+  </div>
+</article>
+
+<style>
+.daily-learning {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 12px;
+}
+
+.daily-learning h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.learning-form {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #333;
+  font-size: 16px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+button {
+  background: #16C47F;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+button:hover {
+  background: #13A76F;
+}
+
+button#cancelBtn {
+  background: #6c757d;
+}
+
+button#cancelBtn:hover {
+  background: #5a6268;
+}
+
+.learning-list {
+  margin-top: 40px;
+}
+
+.learning-entry {
+  background: white;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border: 1px solid #eee;
+  position: relative;
+}
+
+.learning-entry .date {
+  font-weight: bold;
+  color: #666;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.learning-entry .content {
+  line-height: 1.6;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.learning-entry .content p {
+  margin: 8px 0;
+  font-size: 0.9rem;
+}
+
+.entry-actions {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  display: flex;
+  gap: 8px;
+}
+
+.entry-actions button {
+  padding: 4px 8px;
+  font-size: 12px;
+  background: transparent;
+  border: 1px solid #ddd;
+  color: #666;
+}
+
+.entry-actions button:hover {
+  background: #f8f9fa;
+  color: #333;
+}
+
+.entry-actions button.delete-btn:hover {
+  background: #dc3545;
+  color: white;
+  border-color: #dc3545;
+}
+
+.entry {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  font-size: 0.3rem;
+  line-height: 1.2;
+}
+
+.learning-entry .tags {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.learning-entry .tag {
+  background: #e9ecef;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  color: #495057;
+}
+.tag-filter {
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tag-filter button {
+  background: #e9ecef;
+  color: #495057;
+  border: none;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.tag-filter button.active {
+  background: #16C47F;
+  color: white;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.getElementById('learningForm');
+  const entriesContainer = document.getElementById('learningEntries');
+  const submitBtn = document.getElementById('submitBtn');
+  const cancelBtn = document.getElementById('cancelBtn');
+  const editIndexInput = document.getElementById('editIndex');
+
+  // 오늘 날짜를 기본값으로 설정
+  document.getElementById('date').valueAsDate = new Date();
+
+  // 저장된 학습 기록 불러오기
+  loadLearningEntries();
+
+  // 취소 버튼 클릭 처리
+  cancelBtn.addEventListener('click', function() {
+    resetForm();
+  });
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const entry = {
+      date: document.getElementById('date').value,
+      learnings: [
+        document.getElementById('learning1').value,
+        document.getElementById('learning2').value,
+        document.getElementById('learning3').value
+      ],
+      tags: document.getElementById('tags').value.split(',').map(tag => tag.trim()).filter(tag => tag)
+    };
+
+    const editIndex = parseInt(editIndexInput.value);
+    
+    if (editIndex >= 0) {
+      // 수정 모드
+      updateEntry(editIndex, entry);
+    } else {
+      // 새로운 항목 추가 모드
+      saveEntry(entry);
+    }
+    
+    // 폼 초기화
+    resetForm();
+    
+    // 목록 새로고침
+    loadLearningEntries();
+  });
+
+  function saveEntry(entry) {
+    let entries = JSON.parse(localStorage.getItem('learningEntries') || '[]');
+    entries.push(entry);
+    localStorage.setItem('learningEntries', JSON.stringify(entries));
+  }
+
+  function updateEntry(index, entry) {
+    let entries = JSON.parse(localStorage.getItem('learningEntries') || '[]');
+    entries[index] = entry;
+    localStorage.setItem('learningEntries', JSON.stringify(entries));
+  }
+
+  function deleteEntry(index) {
+    if (confirm('이 기록을 삭제하시겠습니까?')) {
+      let entries = JSON.parse(localStorage.getItem('learningEntries') || '[]');
+      entries.splice(index, 1);
+      localStorage.setItem('learningEntries', JSON.stringify(entries));
+      loadLearningEntries();
+    }
+  }
+
+  function editEntry(index) {
+    let entries = JSON.parse(localStorage.getItem('learningEntries') || '[]');
+    const entry = entries[index];
+    
+    // 폼에 데이터 채우기
+    document.getElementById('date').value = entry.date;
+    document.getElementById('learning1').value = entry.learnings[0];
+    document.getElementById('learning2').value = entry.learnings[1];
+    document.getElementById('learning3').value = entry.learnings[2];
+    document.getElementById('tags').value = entry.tags ? entry.tags.join(', ') : '';
+    
+    // 수정 모드로 전환
+    editIndexInput.value = index;
+    submitBtn.textContent = '수정하기';
+    cancelBtn.style.display = 'block';
+    
+    // 폼으로 스크롤
+    form.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function resetForm() {
+    form.reset();
+    document.getElementById('date').valueAsDate = new Date();
+    editIndexInput.value = -1;
+    submitBtn.textContent = '저장하기';
+    cancelBtn.style.display = 'none';
+    document.getElementById('tags').value = '';
+  }
+
+  function loadLearningEntries() {
+    const entries = JSON.parse(localStorage.getItem('learningEntries') || '[]');
+    entriesContainer.innerHTML = '';
+    
+    // 태그 필터 버튼 생성
+    const allTags = [...new Set(entries.flatMap(entry => entry.tags || []))];
+    const filterContainer = document.createElement('div');
+    filterContainer.className = 'tag-filter';
+    filterContainer.innerHTML = `
+      <button class="active" data-tag="">전체</button>
+      ${allTags.map(tag => `<button data-tag="${tag}">${tag}</button>`).join('')}
+    `;
+    
+    // 태그 버튼에 이벤트 리스너 추가
+    filterContainer.querySelectorAll('button').forEach(button => {
+      button.addEventListener('click', function() {
+        const tag = this.getAttribute('data-tag');
+        filterByTag(tag);
+      });
+    });
+    
+    entriesContainer.appendChild(filterContainer);
+    
+    // 필터링된 항목 표시
+    const selectedTag = localStorage.getItem('selectedTag') || '';
+    const filteredEntries = entries.filter(entry => {
+      return !selectedTag || (entry.tags && entry.tags.includes(selectedTag));
+    });
+    
+    filteredEntries.sort((a, b) => new Date(b.date) - new Date(a.date))
+      .forEach((entry, index) => {
+        const entryElement = document.createElement('div');
+        entryElement.className = 'learning-entry';
+        
+        const date = new Date(entry.date).toLocaleDateString('ko-KR', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
+        
+        entryElement.innerHTML = `
+          <div class="entry-actions">
+            <button onclick="window.editEntry(${index})">수정</button>
+            <button class="delete-btn" onclick="window.deleteEntry(${index})">삭제</button>
+          </div>
+          <div class="date">${date}</div>
+          <div class="content">
+            <p>${entry.learnings[0]}</p>
+            <p>${entry.learnings[1]}</p>
+            <p>${entry.learnings[2]}</p>
+          </div>
+          ${entry.tags && entry.tags.length > 0 ? `
+            <div class="tags">
+              ${entry.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+            </div>
+          ` : ''}
+        `;
+        
+        entriesContainer.appendChild(entryElement);
+      });
+  }
+
+  function filterByTag(tag) {
+    localStorage.setItem('selectedTag', tag);
+    const buttons = document.querySelectorAll('.tag-filter button');
+    
+    // 모든 버튼에서 active 클래스 제거
+    buttons.forEach(btn => {
+      btn.classList.remove('active');
+    });
+    
+    // 선택된 태그에 따라 active 클래스 추가
+    buttons.forEach(btn => {
+      if (btn.getAttribute('data-tag') === tag) {
+        btn.classList.add('active');
+      }
+    });
+    
+    loadLearningEntries();
+  }
+
+  // 초기 상태 설정
+  localStorage.setItem('selectedTag', '');
+
+  // 전역 함수로 만들기
+  window.editEntry = editEntry;
+  window.deleteEntry = deleteEntry;
+  window.filterByTag = filterByTag;
+});
+</script> 
