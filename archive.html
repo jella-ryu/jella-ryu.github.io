@@ -1,42 +1,164 @@
 ---
 layout: page
-title: Archive
 permalink: /archive/
 ---
 
 <div class="archive">
-  <div class="archive-list">
-  {% if site.posts.size == 0 %}
-    <h2>No post found</h2>
-  {% else %}
+  <div class="archive-header">
+    <ul class="year-list">
+      {% assign years = site.posts | map: "date" | map: "year" | uniq | sort | reverse %}
+      {% for year in years %}
+        {% if year >= "2025" %}
+          <li>
+            <a href="#{{ year }}">
+              <span>{{ year }}</span>
+              {% assign year_posts = site.posts | where_exp: "post", "post.date | date: '%Y' == year" %}
+              <span class="count">{{ year_posts.size }}</span>
+            </a>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+
   {% for post in site.posts %}
     {% capture currentyear %}{{post.date | date: "%Y"}}{% endcapture %}
-    {% capture currentmonth %}{{post.date | date: "%m"}}{% endcapture %}
     {% if currentyear >= "2025" %}
       {% if currentyear != year %}
         {% unless forloop.first %}</ul>{% endunless %}
-        <h3>{{ currentyear }}</h3>
-        <hr class="year-divider">
+        <div class="year-section">
+          <h2 id="{{ currentyear }}">
+            {{ currentyear }}
+          </h2>
+          <ul class="post-list">
         {% capture year %}{{currentyear}}{% endcapture %}
-        {% assign month = "" %}
-      {% endif %}
-      {% if currentmonth != month %}
-        {% unless forloop.first and currentyear == year %}</ul>{% endunless %}
-        <h4>{{ post.date | date: "%m월" }}</h4>
-        <ul>
-        {% capture month %}{{currentmonth}}{% endcapture %}
       {% endif %}
       <li>
-        <div class="archive-post-title">
+        <div class="post-item">
           <a href="{{ post.url | prepend: site.baseurl }}">{{post.title}}</a>
-        </div>
-        <div class="archive-post-date">
-          {{ post.date | date: "%Y-%m-%d" }}
+          <time>{{ post.date | date: "%Y-%m-%d" }}</time>
         </div>
       </li>
     {% endif %}
   {% endfor %}
-  {% endif %}
   </ul>
-  </div>
-</div> 
+</div>
+
+<style>
+/* 페이지 여백 통일 */
+.page {
+  margin: 0;
+  padding: 0;
+}
+
+.page h1 {
+  margin: 0 0 1em 0;
+  padding: 0;
+}
+
+/* archive 컨테이너 스타일 */
+.archive {
+  padding: 0;
+  margin: 0;
+}
+
+/* archive 스타일 */
+.archive-header {
+  margin-bottom: 30px;  /* categories와 동일한 여백 */
+}
+
+/* 상단 연도 클라우드 스타일 */
+.year-list {
+  list-style-type: none !important;  /* 불릿 강제 제거 */
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.year-list > li {
+  list-style-type: none !important;  /* 불릿 강제 제거 */
+  list-style: none !important;       /* 불릿 강제 제거 */
+  padding: 0;
+  margin: 0;
+}
+
+.year-list li::before {               /* 가상 요소로 생성될 수 있는 불릿도 제거 */
+  content: none !important;
+}
+
+.year-list li a {
+  display: inline-flex;
+  align-items: center;
+  background: #f5f5f5;
+  padding: 4px 10px;
+  border-radius: 15px;
+  font-size: 14px;
+  color: #555;
+  text-decoration: none;
+}
+
+.year-list li a:hover {
+  background: #e9ecef;
+}
+
+.year-list .count {
+  margin-left: 6px;
+  font-size: 12px;
+  background: #e9ecef;
+  padding: 2px 6px;
+  border-radius: 10px;
+}
+
+.year-section {
+  margin-bottom: 30px;  /* categories의 section과 동일한 여백 */
+}
+
+.year-section h2 {
+  font-size: 1.4em;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+/* 포스트 목록 스타일 */
+.post-list {
+  list-style-type: none;
+  padding-left: 15px;  /* 포스트 목록의 왼쪽 패딩 유지 */
+  margin: 0;
+}
+
+.post-list li {
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+.post-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 3px 0;
+}
+
+.post-item a {
+  color: #555;
+  text-decoration: none;
+  font-size: 15px;
+  flex: 1;
+  margin-right: 15px;
+}
+
+.post-item a:hover {
+  color: #007bff;
+}
+
+.post-item time {
+  color: #999;
+  font-size: 13px;
+  white-space: nowrap;
+}
+</style> 

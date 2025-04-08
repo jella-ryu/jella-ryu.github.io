@@ -767,3 +767,35 @@ body .page table td,
 body .page table th {
   font-size: 14px !important;
 }
+
+// Archive, Tags, Categories 페이지 공통 스타일
+.archive, .tags, .categories {
+  a {
+    color: $base-color;
+    font-size: $base-font-size;  // 18px
+  }
+  
+  time {
+    color: $base-lighten-color;
+    font-size: $small-font-size;  // 14px
+    font-weight: 300;
+    margin-left: 3px;
+  }
+
+  .post-item {
+    font-size: $base-font-size;  // 18px
+    margin: 12px 0;
+    
+    a {
+      color: $base-color;
+      &:hover {
+        color: $link-color;
+      }
+    }
+  }
+
+  .post-date {
+    color: $base-lighten-color;
+    font-size: $small-font-size;  // 14px
+  }
+}

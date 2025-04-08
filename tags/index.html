@@ -1,44 +1,144 @@
 ---
 layout: page
-title: Tags
 permalink: /tags/
 ---
 
-{% if site.posts.size == 0 %}
-  <h2>No post found</h2>
-{% endif %}
-
 <div class="tags">
-  <ul class="label">
-    {% for tag in site.tags %}
-    <li>
-      <a href="#{{ tag[0] }}">
-        <span>{{ tag[0] }}</span>
-        <span class="count">{{ tag[1] | size }}</span>
-      </a>
-    </li>
-    {% endfor %}
-  </ul>
-
-  {% for tag in site.tags %}
-    <h2 id="{{ tag[0] }}">
-      {{ tag[0] }}
-    </h2>
-    <ul class="tag">
-      {% for post in tag[1] %}
-        {% if post.title != null %}
-          <li>
-            {% if post.link %}
-              <a href="{{ post.link }}">
-            {% else %}
-              <a href="{{ site.baseurl }}{{ post.url }}">
-            {% endif %}
-                {{ post.title }}
-              </a>
-              <time>{{ post.date | date: "%Y-%m-%d" }}</time>
-          </li>
-        {% endif %}
+  <div class="tags-header">
+    <ul class="tag-list">
+      {% for tag in site.tags %}
+      <li>
+        <a href="#{{ tag[0] }}">
+          <span>{{ tag[0] }}</span>
+          <span class="count">{{ tag[1] | size }}</span>
+        </a>
+      </li>
       {% endfor %}
     </ul>
+  </div>
+
+  {% for tag in site.tags %}
+    <div class="tag-section">
+      <h2 id="{{ tag[0] }}">
+        #{{ tag[0] }}
+      </h2>
+      <ul class="post-list">
+        {% for post in tag[1] %}
+          {% if post.title != null %}
+            <li>
+              <div class="post-item">
+                <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+                <time>{{ post.date | date: "%Y-%m-%d" }}</time>
+              </div>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
   {% endfor %}
 </div>
+
+<style>
+.tags {
+  padding: 0;
+}
+
+.tags-header {
+  margin-bottom: 30px;
+}
+
+/* 상단 태그 클라우드 스타일 */
+.tag-list {
+  list-style-type: none !important;  /* 불릿 강제 제거 */
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag-list > li {
+  list-style-type: none !important;  /* 불릿 강제 제거 */
+  list-style: none !important;       /* 불릿 강제 제거 */
+  padding: 0;
+  margin: 0;
+}
+
+.tag-list li::before {               /* 가상 요소로 생성될 수 있는 불릿도 제거 */
+  content: none !important;
+}
+
+.tag-list li a {
+  display: inline-flex;
+  align-items: center;
+  background: #f5f5f5;
+  padding: 4px 10px;
+  border-radius: 15px;
+  font-size: 14px;
+  color: #555;
+  text-decoration: none;
+}
+
+.tag-list li a:hover {
+  background: #e9ecef;
+}
+
+.tag-list .count {
+  margin-left: 6px;
+  font-size: 12px;
+  background: #e9ecef;
+  padding: 2px 6px;
+  border-radius: 10px;
+}
+
+.tag-section {
+  margin-bottom: 30px;
+}
+
+.tag-section h2 {
+  font-size: 1.4em;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+/* 포스트 목록 스타일 */
+.post-list {
+  list-style-type: none;
+  padding-left: 15px;  /* 포스트 목록의 왼쪽 패딩 유지 */
+  margin: 0;
+}
+
+.post-list li {
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+.post-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 3px 0;
+}
+
+.post-item a {
+  color: #555;
+  text-decoration: none;
+  font-size: 15px;
+  flex: 1;
+  margin-right: 15px;
+}
+
+.post-item a:hover {
+  color: #007bff;
+}
+
+.post-item time {
+  color: #999;
+  font-size: 13px;
+  white-space: nowrap;
+}
+</style>
